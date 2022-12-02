@@ -1,0 +1,37 @@
+<%- include('../partials/header.ejs')%>
+
+<div class = "content">
+    <form method = "POST" action ="/trades/<%= trade.id %>?_method=PUT">
+        <table>
+     
+             <tr>
+                 <td><label for="SubCategory">SubCategory</label> </td>
+                 <td><input type="text" id="subCategory" name="subCategory" value = "<%= trade.subCategory%>"class = "fixed-width" required> </td>
+              </tr>
+         
+             <tr>
+                 <td><label for="title">title</label> </td>
+                 <td><input type="text" id="title" name="title" value = "<%= trade.title%>"class = "fixed-width" required></td>
+             </tr>
+     
+             <tr>
+                 <td><label for="color">color</label> </td>
+                 <td><input type="text" id="color" name="color" value = "<%= trade.color%>"class = "fixed-width" required></td>
+             </tr>
+     
+             <tr>
+                 <td class = "align-top"><label for="description">description</label></td>
+                <td><textarea rows="5" id="description" name="description" class = "fixed-width" required minlength="8"><%= trade.description%></textarea></td>
+            </tr>
+         
+            
+
+             <tr>
+                <td colspan="2" class = "align-right"><button>Update</button></td>
+            </tr>
+         
+            </table>        
+    </form>
+
+    </div>
+    <%- include('../partials/footer.ejs')%>

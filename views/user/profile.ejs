@@ -1,0 +1,147 @@
+<%- include('../partials/header.ejs')%>
+<h2>Welcome, <%= user.firstName + " " + user.lastName%> </h2>
+<div style = "height: 300px; overflow-x:scroll; padding: 74px";>
+<div >
+<%if(trades.length){ %>
+    
+    <p>You have created the following trades</p>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Title</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% trades.forEach(trade=> { %>
+              <tr>
+                <th scope="row"><%=trade.category%></th>
+                <td><%=trade.title%></td>
+                <td><%=trade.status%></td>
+
+                <!-- <td>Available</td> -->
+                <td>
+                    <form>
+                       <button type ="submit" formmethod= "GET" formaction = "/trades/<%= trade.id%>/edit"> Edit </button>
+                       <button type ="submit" formmethod= "POST" formaction = "/trades/<%= trade.id%>?_method=DELETE"> Delete </button>
+                
+                    </form>
+                  
+
+                    <% exchangeTrades.forEach((exp)=>{ %>
+                        
+                      <% if(JSON.stringify(exp._id) === JSON.stringify(trade.exchanges)){ %>
+                         <form action="/users/exchange/<%=exp._id %>" method="POST">
+                           <button class="button">Manage Offer</button>
+                         </form>
+                       <% }%>
+                 <%});%>
+
+
+
+                </td>
+              </tr>
+          <% }); %>
+          
+        </tbody>
+      </table>
+      
+  <%}else{%>
+      
+          <p>You have not traded any item</p>
+     
+  <%}%>
+  </div>
+ 
+  <div >
+    <%if(watchTrades.length){ %>
+     
+       
+       <p>Your favorites!</p>
+       <table class="table">
+           <thead>
+             <tr>
+               <th scope="col">Category</th>
+               <th scope="col">Title</th>
+               <th scope="col">Status</th>
+             </tr>
+           </thead>
+           <tbody>
+             <% watchTrades.forEach(trade=> { %>
+                 <tr>
+                   <th scope="row"><%=trade.category%></th>
+                   <td><%=trade.title%></td>
+                   <td><%=trade.status%></td>
+   
+                   <!-- <td>Available</td> -->
+                    <td>
+                       <form action = "/trades/<%= trade.id%>" method = "POST">
+                          <button > Unwatch </button>
+                   
+                       </form>
+                   </td>
+                 </tr>
+             <% }); %>
+             
+           </tbody>
+         </table>
+         <%}%>
+     </div> 
+
+     <% let yourExchangeTrades = new Array();
+     if(exchangeTrades.length) {
+       exchangeTrades.forEach(extrd => {
+         console.log("user._id: " + typeof user._id);
+         console.log("extrd.author._id: " + typeof extrd.author._id);
+
+         if(JSON.stringify(user._id) === JSON.stringify(extrd.author._id)){
+           console.log("same");
+           yourExchangeTrades.push(extrd);
+         }
+       });
+
+ } %>
+
+ <div >
+         <% if(yourExchangeTrades.length) { %>
+             <div  >
+                 <h5><b> You have started Trading on the following furniture</b></h5>
+                 <table class="table">
+                   <thead>
+                     <tr>
+                       <th scope="col">Title</th>
+                       <th scope="col">Category</th>
+                       <th scope="col">Status</th>
+                       <th scope="col"></th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     <% yourExchangeTrades.forEach(extrd => { %>
+                       <tr>
+                         <td><%=extrd.trade2.title%></td>
+                         <td><%=extrd.trade2.category%></td>
+                         <td><%=extrd.trade2.status%></td>
+                         <td>
+                           <form action="/users/exchange/reject/<%=extrd._id %>" method="POST">
+                             <button class="button">Cancel offer</button>
+                           </form>
+                         </td>    
+                       </tr>
+                     <% }); %>
+                   </tbody>
+                 </table>
+             </div>
+         <%} %>
+ </div> 
+ 
+ 
+</div>
+
+
+<%- include('../partials/footer.ejs')%>
+
+
+</body>
+
+</html>

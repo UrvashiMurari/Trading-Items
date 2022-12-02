@@ -1,0 +1,43 @@
+<%- include('../partials/header.ejs')%>
+    
+<% console.log(trades) %>
+	<div>
+	    <% if(trades.length) { %>
+	       =
+	            <p> Select a Trade to complete trading<p>
+	            <form method="POST" action="/users/profile">
+	            	<table class="table">
+		            	<thead>
+			            	<tr>
+                                <th scope="col"></th>
+			            	    <th scope="col">Category</th>
+			            	    <th scope="col">Title</th>
+			            	    <th scope="col">Status</th>
+			            	  
+			            	</tr>
+		            	</thead>
+		            	<tbody>
+		            		<% trades.forEach(trade => {
+		            			if(trade.status == 'Available'){ %>
+		            				<tr>
+		            					<td>
+		            						<input class="form-check-input" type="radio" name="trade1_id" id="<%=trade.id %>" value="<%=trade.id %>">
+		            					</td>
+		            					
+		            						<td><%=trade.title%></td>
+		            					
+		            					<td><%=trade.category%></td>
+		            					<td><%=trade.status%></td>
+		            				</tr>
+		            				
+		            		<%	}%>
+		            		<% }); %>
+		            	</tbody>
+		            </table>
+		            <button type="submit" class="button">Exchange</button>
+		            <input class="form-check-input" type="hidden" name="trade2_id" id="<%=trade2_id %>" value="<%=trade2_id %>">
+	            </form>
+	        </div>
+	    <%}%>
+	</div>
+<%- include('../partials/footer.ejs')%>

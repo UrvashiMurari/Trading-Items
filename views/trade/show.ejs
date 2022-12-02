@@ -1,0 +1,79 @@
+<%- include('../partials/header.ejs')%>
+
+<div class="body1" >
+<div class="content-block">
+ 
+    
+    
+    <div>
+        <h4>Item Type: <%= trade.subCategory%> </h4>
+       
+        <!-- <form action="/trades" class="trade-btn">
+            <button class="button" type="submit" >Trade ❤ </button>
+            <button class="button" type="submit" >Watch </button>
+        </form> -->
+    </div>
+    <!-- <h5>Item ID: <%= trade.id%> </h5> -->
+    <h5>Item Name: <%= trade.title%> </h5>
+    <h5>Color: <%= trade.color%> </h5>
+    <h5>Item Description: <%= trade.description%> </h5>
+    
+    
+    <%if(user == trade.author._id){%>
+    <form>
+        <button type ="submit" formmethod= "GET" formaction = "/trades/<%= trade.id%>/edit"> Edit </button>
+       <button type ="submit" formmethod= "POST" formaction = "/trades/<%= trade.id%>?_method=DELETE"> Delete </button>
+
+    </form>
+    <%}%>
+
+    <% console.log("user: " + user) %>
+			<% console.log("us: " + us) %>
+			<% let watch = false; %>
+			<%if(us){
+				us.watchTrades.forEach(trd=>{
+					if(JSON.stringify(trd) === JSON.stringify(trade.id)){
+						console.log("watched");
+						watch=true;
+					}
+				});
+			}%>
+
+    
+    <%if(user != trade.author._id){%>
+        <div>
+        <%if(watch){%>
+          <form action="/trades/<%= trade.id%>" method="POST">
+                <button class="button" type="submit">Unwatch</button>
+          </form>
+        <%}
+      else{%>
+          <form action="/trades/<%= trade.id%>" method="POST">
+                <button class="button">Watch</button>
+          </form>
+      <%}%>
+    <%}%>
+    <%if(user != trade.author._id && trade.status == 'Available'){%>
+      <form action="/trades/trade/<%= trade.id%>">
+          <button class="button">Exchange</button>
+      </form>
+    </div>
+    <%}%>
+
+    
+
+    
+
+    
+</div>
+</div>
+
+<%- include('../partials/footer.ejs')%>
+
+        <!-- <form>
+        <button type ="submit" formmethod= "POST" formaction = "/trades/<%= trade.id%>"> Watch </button>
+        </form> -->
+
+            <!-- <form action="/trades/<%= trade.id%>" method="POST">
+                  <button class="button" type="submit" >Watch</button>
+            </form> -->

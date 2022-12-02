@@ -1,0 +1,42 @@
+<%- include('../partials/header.ejs')%>
+	
+	<div >
+	        <div >
+	            <p> You have watched the following Furniture</p>
+	            <table class="table">
+	              <thead>
+	                <tr>
+	                  <th scope="col"></th>
+	                  <th scope="col"></th>
+	                  <th scope="col"></th>
+	                </tr>
+	              </thead>
+	              <tbody>
+                    <tr>
+                      <td scope="row"><%=trade1.category%><br><%=trade1.title%> </td>
+                      <td scope="row"><%=trade2.category%><br><%=trade2.title%> </td>
+
+                      <% if(author._id.toString() == current_user.toString()){ %>
+                      	<td>
+                      		<form action="/users/exchange/reject/<%=trade_id %>" method="POST">
+                      	  		<button class="button">Cancel offer</button>
+                      		</form>
+                      	</td>
+                      <% }
+                      else{ %>
+                      	<td>
+                      		<form action="/users/exchange/accept/<%=trade_id %>" method="POST">
+                      	  		<button class="button">Accept</button>
+                      		</form>
+                      		<form action="/users/exchange/reject/<%=trade_id %>" method="POST">
+                      	  		<button class="button">Reject</button>
+                      		</form>
+                      	</td>
+                      <% } %>
+                    </tr>
+	              </tbody>
+	            </table>
+	        </div>
+	</div>
+
+<%- include('../partials/footer.ejs')%>

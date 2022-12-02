@@ -1,0 +1,39 @@
+<%- include('../partials/header.ejs')%>
+
+<div class="body1" >
+
+ 
+    <% let set = new Set(); %>
+    <%if(trades.length){%>
+        <% for(var i=0; i < trades.length; i++){ %>
+
+            <% set.add(trades[i].category); %>
+           
+        <%}%>
+        <% set = Array.from(set); %>
+        <% set.forEach(value=> { %>
+            <div class="content-block">
+                <b><%= value %></b>
+                <% trades.forEach(trade => { %>
+                    <section>
+                    <% if(trade.category === value){ %>
+                        <a href="/trades/<%= trade.id%>"> <%= trade.title %> </a>
+                    <% } %>
+                </section>
+                <% }); %>
+            </div>
+        <% }); %>
+    <%}
+
+
+
+    else{%>
+        <p>There are no Category to display</p>
+    <%}%>
+    
+
+        
+</div>
+</div>
+
+<%- include('../partials/footer.ejs')%>
